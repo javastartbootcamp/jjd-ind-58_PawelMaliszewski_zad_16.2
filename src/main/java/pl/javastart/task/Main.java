@@ -27,15 +27,19 @@ public class Main {
                 LocalDateTime localDateTime = LocalDateTime.from(temporalAccessor);
                 ZoneId warsawZoneId = ZoneId.of(TimeZones.TIME_FROM_COMPUTER.getZoneId());
                 ZonedDateTime warsawZoneDateTime =  localDateTime.atZone(warsawZoneId);
-                for (TimeZones value : TimeZones.values()) {
-                    ZoneId idOfRequestedZone = ZoneId.of(value.getZoneId());
-                    ZonedDateTime requestedDateTime = warsawZoneDateTime.withZoneSameInstant(idOfRequestedZone);
-                    DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern(patterns.get(0));
-                    System.out.println(value.getName() + dateTimeFormatter.format(requestedDateTime));
-                }
+                printTimeZones(patterns, warsawZoneDateTime);
             } catch (DateTimeException e) {
                 //
             }
+        }
+    }
+
+    private static void printTimeZones(List<String> patterns, ZonedDateTime warsawZoneDateTime) {
+        for (TimeZones value : TimeZones.values()) {
+            ZoneId idOfRequestedZone = ZoneId.of(value.getZoneId());
+            ZonedDateTime requestedDateTime = warsawZoneDateTime.withZoneSameInstant(idOfRequestedZone);
+            DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern(patterns.get(0));
+            System.out.println(value.getName() + dateTimeFormatter.format(requestedDateTime));
         }
     }
 
